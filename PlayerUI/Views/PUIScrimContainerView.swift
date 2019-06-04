@@ -17,7 +17,6 @@ final class PUIScrimContainerView: NSView {
         // https://github.com/insidegui/WWDC/issues/399
 
         layer?.addSublayer(bottomScrimLayer)
-        layer?.addSublayer(topScrimLayer)
     }
 
     required init?(coder: NSCoder) {
@@ -62,27 +61,10 @@ final class PUIScrimContainerView: NSView {
         return l
     }()
 
-    private lazy var topScrimLayer: PUIBoringGradientLayer = {
-        let l = PUIBoringGradientLayer()
-
-        l.colors = self.scrimColors
-        l.locations = self.scrimLocations
-        l.startPoint = CGPoint(x: 0, y: 1)
-        l.endPoint = CGPoint(x: 0, y: 0)
-        l.opacity = self.scrimOpacity
-
-        return l
-    }()
-
     override func layout() {
         var topRect = bounds
         topRect.size.height = bounds.height * 0.3
         bottomScrimLayer.frame = topRect
-
-        var bottomRect = bounds
-        bottomRect.size.height = bounds.height * scrimRatio
-        bottomRect.origin.y = bounds.height - bottomRect.height
-        topScrimLayer.frame = bottomRect
     }
 
 }
